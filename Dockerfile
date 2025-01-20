@@ -9,7 +9,9 @@ ENV KC_BOOTSTRAP_ADMIN_USERNAME=admin \
     KC_HTTP_ENABLED=true \
     KC_PROXY=edge \
     KC_CACHE=local \
-    # Ne pas définir les variables de base de données ici car elles seront fournies par Render
+    KC_HTTP_PORT=8080 \
+    KC_HOSTNAME_PATH=/auth \
+    PROXY_ADDRESS_FORWARDING=true \
     JAVA_OPTS="-Xms512m -Xmx1024m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m"
 
 # Construction en mode optimisé
@@ -17,4 +19,4 @@ RUN /opt/keycloak/bin/kc.sh build
 
 EXPOSE 8080
 
-ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start", "--optimized"]
+ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start-dev", "--http-port=8080", "--proxy=edge"]
